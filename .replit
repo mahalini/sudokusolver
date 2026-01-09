@@ -1,0 +1,26 @@
+run = "npm start"
+entrypoint = "server.js"
+hidden = [".config", "package-lock.json"]
+
+[languages.javascript]
+pattern = "**/*.{js,jsx,ts,tsx,json}"
+syntax = "javascript"
+
+[languages.javascript.languageServer]
+start = "typescript-language-server --stdio"
+
+[nix]
+channel = "stable-22_11"
+
+[deployment]
+run = ["sh", "-c", "npm start"]
+deploymentTarget = "cloudrun"
+
+[env]
+XDG_CONFIG_HOME = "$REPL_HOME/.config"
+PATH = "$REPL_HOME/node_modules/.bin:$REPL_HOME/.config/npm/node_global/bin"
+npm_config_prefix = "$REPL_HOME/.config/npm/node_global"
+
+[[ports]]
+localPort = 3000
+externalPort = 80
